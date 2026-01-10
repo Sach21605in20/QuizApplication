@@ -1,4 +1,6 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 class InvalidUsernameException extends Exception{
     InvalidUsernameException(String message){
@@ -13,12 +15,15 @@ class InvalidPasswordException extends Exception{
 
 
 public class LoginPage{
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("enter username:");
-        String username = sc.nextLine();
-        System.out.println("enter password");
-        String password = sc.nextLine();
+    public static void main(String[] args) throws IOException{
+        String username = "";
+        String password = "";
+        try(BufferedReader bf = new BufferedReader(new InputStreamReader(System.in))){
+            System.out.println("enter username:");
+            username = bf.readLine();
+            System.out.println("enter password");
+            password = bf.readLine();
+        }
         try{
             login(username,password);
             System.out.println("login Created");
@@ -27,7 +32,6 @@ public class LoginPage{
         }catch(InvalidPasswordException e){
             System.out.println(e.getMessage()+"\n"+"Renter Password");
         }
-        sc.close();
     }
 
 
@@ -49,7 +53,9 @@ public class LoginPage{
 
 
     static void PasswordValidation(String password) throws InvalidPasswordException{
-        if(password.length()<8){
+        if(password == null){
+            throw new InvalidPasswordException("enter a Password");
+        }else if(password.length()<8){
             throw new InvalidPasswordException("Password must be more than 8 characters");
         }else if(!containsDigit(password)){
             throw new InvalidPasswordException("Password must have digits");
