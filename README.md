@@ -1,2 +1,2 @@
 # QuizApplication
-Minimal CLI version of Quiz Application for Future Scaling
+Hardcoded Minimal CLI version of a Quiz Application for Future Scaling
